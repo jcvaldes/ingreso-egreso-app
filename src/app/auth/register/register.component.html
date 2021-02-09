@@ -17,7 +17,10 @@
                 />
                 <div class="input-group-append">
                   <span class="input-group-text">
-                    <i *ngIf="registroForm.get('nombre').valid" class="fa fa-check-circle"></i>
+                    <i
+                      *ngIf="registroForm.get('nombre').valid"
+                      class="fa fa-check-circle"
+                    ></i>
                   </span>
                 </div>
               </div>
@@ -33,7 +36,10 @@
 
                 <div class="input-group-append">
                   <span class="input-group-text">
-                    <i *ngIf="registroForm.get('correo').valid" class="fa fa-check-circle"></i>
+                    <i
+                      *ngIf="registroForm.get('correo').valid"
+                      class="fa fa-check-circle"
+                    ></i>
                   </span>
                 </div>
               </div>
@@ -48,7 +54,10 @@
                 />
                 <div class="input-group-append">
                   <span class="input-group-text">
-                    <i *ngIf="registroForm.get('password').valid"  class="fa fa-check-circle"></i>
+                    <i
+                      *ngIf="registroForm.get('password').valid"
+                      class="fa fa-check-circle"
+                    ></i>
                   </span>
                 </div>
               </div>
@@ -56,6 +65,7 @@
 
             <div class="form-group">
               <button
+                *ngIf="!loading"
                 [disabled]="registroForm.invalid"
                 type="submit"
                 class="btn btn-primary submit-btn btn-block"
@@ -63,6 +73,15 @@
                 Crear cuenta
               </button>
             </div>
+            <button
+              *ngIf="loading"
+              [disabled]="true"
+              type="submit"
+              class="btn btn-primary submit-btn btn-block"
+            >
+              <i class="fa fa-spin fa-sync"></i>
+              Espere
+            </button>
             <div class="text-block text-center my-3">
               <span class="text-small font-weight-semibold">
                 ya tienes una cuenta?
