@@ -1,8 +1,8 @@
 export class Usuario {
-  static fromFirebase({uid, name, email}) {
+  static fromFirebase({uid, nombre, email}) {
     return new Usuario(
       uid,
-      name,
+      nombre,
       email
     );
   }

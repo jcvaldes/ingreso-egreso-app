@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
 import { Usuario } from '../models/usuario.model';
+import * as ingresoEgresoActions from '../ingreso-egreso/ingreso-egreso.actions';
 import { Subscription } from 'rxjs';
 import * as authActions from '../auth/auth.actions';
 import { Store } from '@ngrx/store';
@@ -14,6 +15,11 @@ import { AppState } from '../app.reducer';
 })
 export class AuthService {
   userSubscription: Subscription = new Subscription();
+  private _user: Usuario;
+
+  get user() {
+    return this._user;
+  }
   constructor(
     public auth: AngularFireAuth,
     private firestore: AngularFirestore,
@@ -22,21 +28,24 @@ export class AuthService {
 
   // nos avisa cualquier cambio con la autenticacion, cuando tengamos el usuario o cierro sesion
   initAuthListener() {
-
-    this.auth.authState.subscribe( fuser => {
-      if ( fuser ) {
+    this.auth.authState.subscribe(fuser => {
+      if (fuser) {
         // existe
-        this.userSubscription = this.firestore.doc(`${ fuser.uid }/usuario`).valueChanges()
-          .subscribe( (firestoreUser: any) => {
-            console.log({firestoreUser});
-            const user = Usuario.fromFirebase( firestoreUser );
-            this.store.dispatch( authActions.setUser({ user }) );
+        this.userSubscription = this.firestore.doc(`${fuser.uid}/usuario`).valueChanges()
+          .subscribe((firestoreUser: any) => {
+            // console.log({firestoreUser});
+            const user = Usuario.fromFirebase(firestoreUser);
+            this._user = user;
+            this.store.dispatch(authActions.setUser({ user }));
           })
 
       } else {
         // no existe
+        this._user = null;
         this.userSubscription.unsubscribe();
-        this.store.dispatch( authActions.unSetUser() );
+        this.store.dispatch(authActions.unSetUser());
+        this.store.dispatch(ingresoEgresoActions.unSetItems());
+
       }
     });
   }
