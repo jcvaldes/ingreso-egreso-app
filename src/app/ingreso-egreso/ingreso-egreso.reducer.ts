@@ -6,7 +6,10 @@ import { IngresoEgreso } from '../models/ingreso-egreso.model';
 export interface State {
   items: IngresoEgreso[];
 }
-
+// lo hago por que al hacer el store lazy load pierdo el state inggresosEgregoos del AppState
+export interface AppStateWithIngreso extends State {
+  ingresosEgresos: State;
+}
 export const initialState: State = {
   items: [],
 }

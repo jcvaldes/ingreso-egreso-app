@@ -1,18 +1,33 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+import { CanActivate, Router, CanLoad, Route, UrlSegment, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
-import { tap } from 'rxjs/operators';
+import { take, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate, CanLoad {
   constructor(
     private authService: AuthService,
     private router: Router
 
   ) { }
+
+  canLoad():  Observable<boolean>  {
+
+    // dispara la subscripcion cuando se carga
+
+    return this.authService.isAuth()
+    .pipe(
+      tap(estado => {
+        if (!estado) {
+          this.router.navigate(['/login']);
+        }
+      }),
+      take(1) // camcela la subscipcion cuando ya resuelva la primera vez
+    );
+  }
   canActivate(): Observable<boolean> {
     return this.authService.isAuth()
       .pipe(

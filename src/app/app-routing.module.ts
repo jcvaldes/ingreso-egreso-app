@@ -11,10 +11,16 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   {
     path: '',
-    component: DashboardComponent,
-    children: dashboardRoutes,
-    canActivate: [AuthGuard]
+    canLoad: [AuthGuard],
+    loadChildren: () => import('./ingreso-egreso/ingreso-egreso.module')
+                          .then(m => m.IngresoEgresoModule)
   },
+  // {
+  //   path: '',
+  //   component: DashboardComponent,
+  //   children: dashboardRoutes,
+  //   canActivate: [AuthGuard]
+  // },
   { path: '**', redirectTo: '' },
 ];
 
