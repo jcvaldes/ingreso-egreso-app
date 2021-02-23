@@ -1,11 +1,5 @@
 {
-  "targets": {
-    "ingreso-egreso-app-d2a4d": {
-      "hosting": {
-        "ingresoEgresoApp": [
-          "ingreso-egreso-app-d2a4d"
-        ]
-      }
-    }
+  "projects": {
+    "default": "ingreso-egreso-app-d2a4d"
   }
 }

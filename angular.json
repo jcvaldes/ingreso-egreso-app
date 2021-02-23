@@ -23,6 +23,15 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "url-join",
+              "uuid/v4",
+              "file-saver",
+              "xlsx",
+              "sheetjs",
+              "chart.js"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
